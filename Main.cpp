@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstring>
 
 int StringToInt(char string_[])
 {
