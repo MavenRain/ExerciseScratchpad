@@ -2,6 +2,7 @@
 
 int StringToInt(char string_[])
 {
+    if (! string_) return 0;
     bool negative(string_[0] == '-');
     int value(0);
     for (int index = negative; string_[index] >= '0' && string_[index] <= '9'; ++ index) value = 10 * value + (string_[index] - '0');
@@ -55,6 +56,7 @@ void main()
             std::cout << testDescription << ": " << (condition ? "PASS" : "FAIL") << std::endl;
         }
     };
+    TestHarness::Assert("The null string is converted to int 0", StringToInt(NULL) == 0);
     TestHarness::Assert("The string '456' is converted to int 456", StringToInt("456") == 456);
     TestHarness::Assert("The string '-123' is converted to int -123", StringToInt("-123") == -123);
     TestHarness::Assert("The string 'abc' is converted to int 0", StringToInt("abc") == 0);
