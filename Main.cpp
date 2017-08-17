@@ -33,9 +33,9 @@ public:
 // AddElement:  Returns the root element of the input tree with the proper node added
 TrinaryTree * AddElement(const TrinaryTree & tree, int number)
 {
-    if (tree.Number() == number) return tree.Middle() ? new TrinaryTree(tree.Number(), tree.Left(), AddElement(* tree.Middle(), number), tree.Right()) : new TrinaryTree(tree.Number(), tree.Left(), new TrinaryTree(number, NULL, NULL, NULL), tree.Right());    
-    if (tree.Number() < number) return tree.Right() ? new TrinaryTree(tree.Number(), tree.Left(), tree.Middle(), AddElement(* tree.Right(), number)) : new TrinaryTree(tree.Number(), tree.Left(), tree.Middle(), new TrinaryTree(number, NULL, NULL, NULL));
-    return tree.Left() ? new TrinaryTree(tree.Number(), AddElement(* tree.Left(), number), tree.Middle(), tree.Right()) : new TrinaryTree(tree.Number(), new TrinaryTree(number, NULL, NULL, NULL), tree.Middle(), tree.Right());
+    if (tree.Number() == number) return tree.Middle() ? new TrinaryTree(tree.Number(), tree.Left(), AddElement(* tree.Middle(), number), tree.Right()) : new TrinaryTree(tree.Number(), tree.Left(), new TrinaryTree(number), tree.Right());    
+    if (tree.Number() < number) return tree.Right() ? new TrinaryTree(tree.Number(), tree.Left(), tree.Middle(), AddElement(* tree.Right(), number)) : new TrinaryTree(tree.Number(), tree.Left(), tree.Middle(), new TrinaryTree(number));
+    return tree.Left() ? new TrinaryTree(tree.Number(), AddElement(* tree.Left(), number), tree.Middle(), tree.Right()) : new TrinaryTree(tree.Number(), new TrinaryTree(number), tree.Middle(), tree.Right());
 }
 
 TrinaryTree * FindElement(const TrinaryTree & tree, int number)
