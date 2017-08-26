@@ -41,7 +41,7 @@ TrinaryTree * AddElement(const TrinaryTree & tree, int number)
 
 TrinaryTree * FindElement(const TrinaryTree & tree, int number)
 {
-    if (tree.Number() == number) return tree.Middle() ? FindElement(* tree.Middle(), number) : new TrinaryTree(tree.Number(), tree.Left(), tree.Middle(), tree.Right());
+    if (tree.Number() == number) return tree.Middle() ? FindElement(* tree.Middle(), number) : & const_cast<TrinaryTree &>(tree);
     if (tree.Number() < number) return tree.Right() ? FindElement(* tree.Right(), number) : NULL;
     return tree.Left() ? FindElement(* tree.Left(), number) : NULL;
 }
@@ -60,9 +60,9 @@ void main()
     TestHarness::Assert("The string '456' is converted to int 456", StringToInt("456") == 456);
     TestHarness::Assert("The string '-123' is converted to int -123", StringToInt("-123") == -123);
     TestHarness::Assert("The string 'abc' is converted to int 0", StringToInt("abc") == 0);
-    TestHarness::Assert("The tree with the left leaf greater than head is constructed without the left leaf", ! (new TrinaryTree(4, new TrinaryTree(5), NULL, NULL))->Left());
-    TestHarness::Assert("The tree with the middle leaf not equal to the head is constructed without the middle leaf", ! (new TrinaryTree(4, NULL, new TrinaryTree(5), NULL))->Middle());
-    TestHarness::Assert("The tree with the right leaf less than the head is constructed without the right leaf", ! (new TrinaryTree(4, NULL, NULL, new TrinaryTree(3)))->Right());
+    TestHarness::Assert("The tree with the left leaf greater than head is constructed without the left leaf", ! TrinaryTree(4, new TrinaryTree(5), NULL, NULL).Left());
+    TestHarness::Assert("The tree with the middle leaf not equal to the head is constructed without the middle leaf", ! TrinaryTree(4, NULL, new TrinaryTree(5), NULL).Middle());
+    TestHarness::Assert("The tree with the right leaf less than the head is constructed without the right leaf", ! TrinaryTree(4, NULL, NULL, new TrinaryTree(3)).Right());
     TestHarness::Assert("The number '3' is found in a single-node tree labelled '3'", FindElement(TrinaryTree(3), 3) && FindElement(TrinaryTree(3), 3)->Number() == 3);
     TestHarness::Assert("The number '4' is NOT found in a single-node tree labelled '3'", ! FindElement(TrinaryTree(3), 4));
     TestHarness::Assert("The number '6' can be found in the third level of a constructed tree", FindElement(* AddElement(* AddElement(* AddElement(TrinaryTree(3), 5), 6), 5), 6) && FindElement(* AddElement(* AddElement(* AddElement(TrinaryTree(3), 5), 6), 5), 6)->Number() == 6);
